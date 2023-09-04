@@ -49,4 +49,20 @@ public class AuthService {
         }
         throw new UsuarioNaoAutenticadoException();
     }
+
+    @Transactional
+    public void alterarDados(Authentication authentication, String nome, String email){
+        if(authentication != null && authentication.isAuthenticated()) {
+            String emailAuthenticated = authentication.getName();
+            Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(emailAuthenticated);
+
+            if (optionalUsuario.isPresent()){
+
+                Usuario usuario = optionalUsuario.get();
+                usuarioRepository.updateNomeEmail( nome, email, usuario.getId());
+
+            }
+
+        }
+    }
 }
