@@ -35,22 +35,18 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private Perfil perfil;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
 
     public Usuario(){
         this.habilitado =true;
     }
 
-    public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, Endereco endereco){
+    public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado){
         this.id=id;
         this.nome=nome;
         this.email=email;
         this.senha=senha;
         this.perfil=perfil;
         this.habilitado=habilitado;
-        this.endereco = endereco;
     }
 
     public Long getId() {

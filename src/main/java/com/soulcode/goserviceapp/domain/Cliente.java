@@ -15,24 +15,21 @@ public class Cliente extends Usuario {
 
     private LocalDate dataNascimento;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
 
     public Cliente() {
         super();
         setPerfil(Perfil.CLIENTE);
     }
 
-    public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, String telefone, String cpf, LocalDate dataNascimento, Endereco endereco) {
-        super(id, nome, email, senha, perfil, habilitado, endereco);
+    public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, String telefone, String cpf, LocalDate dataNascimento) {
+        super(id, nome, email, senha, perfil, habilitado);
         this.telefone = telefone;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
     }
 
-    public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, Endereco endereco) {
-        super(id, nome, email, senha, perfil, habilitado, endereco);
+    public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado) {
+        super(id, nome, email, senha, perfil, habilitado);
     }
 
     public String getTelefone() {
