@@ -110,12 +110,15 @@ public class AdministradorController {
     }
 
     @GetMapping(value = "/usuarios")
-    public ModelAndView usuarios() {
+    public ModelAndView usuarios(@RequestParam(defaultValue = "0", name="page") int pagina) {
         ModelAndView mv = new ModelAndView("usuariosAdmin");
         try {
-            List<Usuario> usuarios = usuarioService.findAll();
+            int offset = pagina * 10;
+            List<Usuario> usuarios = usuarioService.buscarUsuariosPaginados(offset);
             mv.addObject("usuarios", usuarios);
-        } catch (Exception ex) {
+            mv.addObject("currentPage", pagina);
+            mv.addObject("totalPages", usuarios.size());
+        } catch (Exception e) {
             mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
         }
         return mv;

@@ -100,4 +100,8 @@ public class UsuarioService {
         }
         throw new UsuarioNaoEncontradoException();
     }
+
+    public List<Usuario> buscarUsuariosPaginados(int offset) {
+        return usuarioRepository.buscaUsuariosPaginados(offset);
+    }
 }

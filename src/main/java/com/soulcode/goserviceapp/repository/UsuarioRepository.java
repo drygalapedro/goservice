@@ -31,8 +31,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "UPDATE usuarios u SET u.nome = ?, u.email = ? WHERE u.id = ?", nativeQuery = true)
     void updateNomeEmail(String nome, String email, Long id);
 
-
-
-
+    @Query(value = "SELECT * FROM usuarios LIMIT ? , 3", nativeQuery = true)
+    List<Usuario> buscaUsuariosPaginados(int offset);
 
 }
