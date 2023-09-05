@@ -1,6 +1,7 @@
 package com.soulcode.goserviceapp.repository;
 
 import com.soulcode.goserviceapp.domain.Usuario;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -29,4 +30,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query(value = "UPDATE usuarios u SET u.nome = ?, u.email = ? WHERE u.id = ?", nativeQuery = true)
     void updateNomeEmail(String nome, String email, Long id);
+
+
+
+
+
 }
