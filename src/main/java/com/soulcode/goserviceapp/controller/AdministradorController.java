@@ -136,8 +136,8 @@ public class AdministradorController {
     public ModelAndView searchUser(@RequestParam(name = "search") String search){
         ModelAndView mv = new ModelAndView("usuariosAdmin");
         try {
-            Usuario usuario = usuarioService.findUserByNome(search);
-            mv.addObject("usuarios", usuario);
+            List<Usuario> usuarios = usuarioService.findUserByNome(search);
+            mv.addObject("usuarios", usuarios);
         } catch (Exception ex){
             mv.addObject("errorMessage", "Usuário não encontrado.");
         }
