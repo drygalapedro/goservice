@@ -1,6 +1,11 @@
 package com.soulcode.goserviceapp.service;
 
-import com.soulcode.goserviceapp.domain.*;
+
+import com.soulcode.goserviceapp.domain.Administrador;
+import com.soulcode.goserviceapp.domain.Cliente;
+import com.soulcode.goserviceapp.domain.Prestador;
+import com.soulcode.goserviceapp.domain.Usuario;
+import com.soulcode.goserviceapp.repository.UsuarioLogRepository;
 import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +28,6 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
 
     public Usuario findByEmail(String email){
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
@@ -62,6 +66,14 @@ public class UsuarioService {
             default:
                 return createAndSaveCliente(usuario);
         }
+    }
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository= usuarioRepository;
+    }
+
+    public List<Object[]> findUsersByPerfil(String perfil) {
+        return usuarioRepository.findUsersByPerfil(perfil);
     }
 
     private Administrador createAndSaveAdministrador(Usuario u){
