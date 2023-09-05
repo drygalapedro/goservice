@@ -23,7 +23,7 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    
+
 
     public Usuario findByEmail(String email){
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
@@ -67,6 +67,10 @@ public class UsuarioService {
     private Administrador createAndSaveAdministrador(Usuario u){
         Administrador admin = new Administrador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(),u.getEndereco());
         return usuarioRepository.save(admin);
+    }
+
+    public List<Usuario> findUserByNome(String search){
+        return usuarioRepository.findUserByNome(search);
     }
 
     private Prestador createAndSavePrestador(Usuario u) {
