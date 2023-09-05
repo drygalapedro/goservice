@@ -69,9 +69,7 @@ public class UsuarioService {
         return usuarioRepository.save(admin);
     }
 
-    public List<Usuario> findUserByNome(String search){
-        return usuarioRepository.findUserByNome(search);
-    }
+
 
     private Prestador createAndSavePrestador(Usuario u) {
         Prestador prestador = new Prestador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(),u.getEndereco());
@@ -79,7 +77,7 @@ public class UsuarioService {
     }
 
     private Cliente createAndSaveCliente(Usuario u) {
-        Cliente cliente = new Cliente(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(), (Endereco) u.getEndereco());
+        Cliente cliente = new Cliente(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
         return usuarioRepository.save(cliente);
     }
 
