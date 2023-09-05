@@ -23,4 +23,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
     @Query(value = "SELECT * FROM servicos s WHERE s.nome LIKE %?1%", nativeQuery = true)
     List<Servico> findServiceByNome(String search);
+
+    @Query(value = "SELECT * FROM servicos LIMIT ? , 10", nativeQuery = true)
+    List<Servico> buscaServicosPaginados(int offset);
 }
