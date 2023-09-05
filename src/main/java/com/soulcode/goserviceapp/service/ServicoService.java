@@ -55,11 +55,11 @@ public class ServicoService {
         return servicoRepository.findByPrestadorEmail(email);
     }
 
-    public Page<Servico> findPaginated(Pageable pageable) {
-        return servicoRepository.findAll(pageable);
-    }
-
     public List<Servico> findServiceByNome(String search){
         return servicoRepository.findServiceByNome(search);
+    }
+
+    public List<Servico> buscarServicosPaginados(int offset) {
+        return servicoRepository.buscaServicosPaginados(offset);
     }
 }
