@@ -35,6 +35,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private Perfil perfil;
 
+
     public Usuario(){
         this.habilitado =true;
     }
@@ -149,5 +150,9 @@ public class Usuario implements UserDetails {
                 Objects.equals(email, usuario.email) &&
                 Objects.equals(senha, usuario.senha) &&
                 perfil == usuario.perfil;
+    }
+
+    public Object getEndereco() {
+        return null;
     }
 }

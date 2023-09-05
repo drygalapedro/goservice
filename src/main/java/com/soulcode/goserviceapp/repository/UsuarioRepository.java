@@ -34,4 +34,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT * FROM usuarios LIMIT ? , 3", nativeQuery = true)
     List<Usuario> buscaUsuariosPaginados(int offset);
 
+    @Query(value = "SELECT u.perfil = ?, COUNT(u) FROM Usuario u GROUP BY u.perfil", nativeQuery = true)
+    List<Object[]> findUsersByPerfil(String perfil);
 }

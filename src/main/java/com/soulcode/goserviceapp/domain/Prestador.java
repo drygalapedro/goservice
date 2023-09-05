@@ -41,6 +41,9 @@ public class Prestador extends Usuario{
         this.especialidades = especialidades;
     }
 
+    public Prestador(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, Object endereco) {
+    }
+
     public String getDescricao() {
         return descricao;
     }

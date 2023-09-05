@@ -15,12 +15,15 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
     @Query(value =
             "SELECT s.*" +
-            " FROM servicos s" +
-            " JOIN prestadores_servicos ps ON s.id = ps.servico_id" +
-            " JOIN usuarios u ON u.id = ps.prestador_id" +
-            " WHERE u.email = ?", nativeQuery = true)
+                    " FROM servicos s" +
+                    " JOIN prestadores_servicos ps ON s.id = ps.servico_id" +
+                    " JOIN usuarios u ON u.id = ps.prestador_id" +
+                    " WHERE u.email = ?", nativeQuery = true)
     List<Servico> findByPrestadorEmail(String email);
 
     @Query(value = "SELECT * FROM servicos s WHERE s.nome LIKE %?1%", nativeQuery = true)
     List<Servico> findServiceByNome(String search);
+
+    @Query(value = "SELECT * FROM servicos LIMIT ? , 10", nativeQuery = true)
+    List<Servico> buscaServicosPaginados(int offset);
 }

@@ -1,6 +1,9 @@
 package com.soulcode.goserviceapp.controller;
 
 import com.soulcode.goserviceapp.domain.Cliente;
+import com.soulcode.goserviceapp.domain.Usuario;
+import com.soulcode.goserviceapp.domain.enums.Perfil;
+import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.AuthService;
 import com.soulcode.goserviceapp.service.UsuarioService;
 import com.soulcode.goserviceapp.service.exceptions.SenhaIncorretaException;
@@ -17,12 +20,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping(value = "/auth")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping(value = "/login")
     public ModelAndView login(@RequestParam(name = "error", required = false) String error) {
@@ -84,11 +92,25 @@ public class AuthController {
             RedirectAttributes attributes
     ){
 
+        if(authentication != null && authentication.isAuthenticated()) {
 
-        authService.alterarDados(authentication, nome, email);
-        attributes.addFlashAttribute("successMessage", "Dados alterados, faça login novamente!");
+            String emailAuthenticated = authentication.getName();
+            Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(emailAuthenticated);
 
+            if (optionalUsuario.isPresent() && optionalUsuario.get().getPerfil() == Perfil.ADMIN){
 
+                if (nome.isEmpty() | email.isEmpty()){
+                    attributes.addFlashAttribute("errorMessage", "Preencha todos os dados");
+                    return "redirect:/auth/alterar-dados";
+                }
+
+                authService.alterarDados(authentication, nome, email);
+                attributes.addFlashAttribute("successMessage", "Dados alterados, faça login novamente!");
+            } else {
+                attributes.addFlashAttribute("errorMessage", "Você não é um adiministrador");
+                return "redirect:/auth/alterar-dados";
+            }
+        }
         return "redirect:/auth/login";
     }
 
