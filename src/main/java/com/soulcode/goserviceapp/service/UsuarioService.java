@@ -36,6 +36,14 @@ public class UsuarioService {
         throw new UsuarioNaoEncontradoException();
     }
 
+    public Usuario findUserByNome(String search){
+        Optional<Usuario> usuario = usuarioRepository.findUserByNome(search);
+        if (usuario.isPresent()){
+            return usuario.get();
+        }
+        throw new UsuarioNaoEncontradoException();
+    }
+
     public List<Usuario> findAll(){
         return usuarioRepository.findAll();
     }

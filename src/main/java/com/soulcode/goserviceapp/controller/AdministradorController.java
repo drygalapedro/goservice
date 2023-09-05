@@ -120,6 +120,18 @@ public class AdministradorController {
         return "redirect:/admin/usuarios";
     }
 
+    @PostMapping(value = "/usuarios/busca")
+    public ModelAndView searchUser(@RequestParam(name = "search") String search){
+        ModelAndView mv = new ModelAndView("usuariosAdmin");
+        try {
+            Usuario usuario = usuarioService.findUserByNome(search);
+            mv.addObject("usuarios", usuario);
+        } catch (Exception ex){
+            mv.addObject("errorMessage", "Usuário não encontrado.");
+        }
+        return mv;
+    }
+
     @PostMapping(value = "/usuarios/disable")
     public String disableUser(@RequestParam(name = "usuarioId") Long id, RedirectAttributes attributes) {
         try {
