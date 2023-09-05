@@ -1,5 +1,6 @@
 package com.soulcode.goserviceapp.service;
 
+
 import com.soulcode.goserviceapp.domain.Administrador;
 import com.soulcode.goserviceapp.domain.Cliente;
 import com.soulcode.goserviceapp.domain.Prestador;
@@ -36,12 +37,8 @@ public class UsuarioService {
         throw new UsuarioNaoEncontradoException();
     }
 
-    public Usuario findUserByNome(String search){
-        Optional<Usuario> usuario = usuarioRepository.findUserByNome(search);
-        if (usuario.isPresent()){
-            return usuario.get();
-        }
-        throw new UsuarioNaoEncontradoException();
+    public List<Usuario> findUserByNome(String search){
+        return usuarioRepository.findUserByNome(search);
     }
 
     public List<Usuario> findAll(){
@@ -80,12 +77,14 @@ public class UsuarioService {
     }
 
     private Administrador createAndSaveAdministrador(Usuario u){
-        Administrador admin = new Administrador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
+        Administrador admin = new Administrador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(),u.getEndereco());
         return usuarioRepository.save(admin);
     }
 
+
+
     private Prestador createAndSavePrestador(Usuario u) {
-        Prestador prestador = new Prestador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
+        Prestador prestador = new Prestador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(),u.getEndereco());
         return usuarioRepository.save(prestador);
     }
 

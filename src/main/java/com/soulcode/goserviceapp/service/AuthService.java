@@ -57,10 +57,8 @@ public class AuthService {
             Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(emailAuthenticated);
 
             if (optionalUsuario.isPresent()){
-
                 Usuario usuario = optionalUsuario.get();
                 usuarioRepository.updateNomeEmail( nome, email, usuario.getId());
-
             }
 
         }

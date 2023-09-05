@@ -54,6 +54,11 @@
             <div class="card-body">
                 <h5 class="card-title mb-2">Usuários cadastrados</h5>
 
+                <form th:action="@{/admin/usuarios/busca}" method="post">
+                    <input type="text" class="form-control" name="search" id="search" placeholder="Buscar Usuário">
+                    <input type="submit" class="btn btn-secondary mt-2 mb-3" name="buscar" id="buscar">
+                </form>
+
                 <table class="table w-100">
                     <thead>
                     <tr>

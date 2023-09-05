@@ -14,4 +14,7 @@ public class Administrador extends Usuario {
     public Administrador(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado) {
         super(id, nome, email, senha, perfil, habilitado);
     }
+
+    public Administrador(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, Object endereco) {
+    }
 }
