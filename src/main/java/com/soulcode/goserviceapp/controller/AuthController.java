@@ -72,4 +72,24 @@ public class AuthController {
         }
         return "redirect:/auth/password/new";
     }
+
+    @GetMapping(value = "/alterar-dados")
+    public String alterarDadosCadastrais() { return "alterarDadosCadastrais"; }
+
+    @PostMapping(value = "/alterar-dados")
+    public String alterarDados(
+            @RequestParam(name = "nome") String nome,
+            @RequestParam(name = "email") String email,
+            Authentication authentication,
+            RedirectAttributes attributes
+    ){
+
+
+        authService.alterarDados(authentication, nome, email);
+        attributes.addFlashAttribute("successMessage", "Dados alterados, faça login novamente!");
+
+
+        return "redirect:/auth/login";
+    }
+
 }

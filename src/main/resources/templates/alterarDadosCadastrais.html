@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{::title}, ~{::#content})">
 <head>
     <link th:src="@{/resources/static/js/script.js}">
-    <title>Alterar Senha | GoService</title>
+    <title>Alterar Dados | GoService</title>
 </head>
 <body>
 
@@ -10,7 +10,7 @@
     <div th:replace="fragments/header :: header"></div>
 
     <main class="container mt-4">
-        <h2>Alterar Senha</h2>
+        <h2>Alterar Dados Cadastrais</h2>
 
         <div class="card w-100 mt-5">
             <div class="card-body">
@@ -18,15 +18,17 @@
                 <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
                 <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
-                <form method="post" th:action="@{/auth/password/new}">
+                <form method="post" th:action="@{/auth/alterar-dados}">
+
                     <div class="mb-3">
-                        <label for="senhaAtual" class="form-label">Senha Atual<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="senhaAtual" name="senhaAtual" required>
+                        <label for="nome" class="form-label">Nome:<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
                         <div class="form-text"></div>
                     </div>
+
                     <div class="mb-3">
-                        <label for="senhaNova" class="form-label">Senha Nova<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="senhaNova" name="senhaNova" required>
+                        <label for="email" class="form-label">Email:<span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" required>
                         <div class="form-text"></div>
                     </div>
 

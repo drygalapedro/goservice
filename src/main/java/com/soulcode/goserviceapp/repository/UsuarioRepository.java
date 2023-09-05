@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+
     Optional<Usuario> findByEmail(String email);
 
     @Modifying
@@ -24,4 +25,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query(value = "SELECT * FROM usuarios u WHERE u.nome LIKE %?1%", nativeQuery = true)
     Optional<Usuario> findUserByNome(String search);
+
+    @Modifying
+    @Query(value = "UPDATE usuarios u SET u.nome = ?, u.email = ? WHERE u.id = ?", nativeQuery = true)
+    void updateNomeEmail(String nome, String email, Long id);
 }
