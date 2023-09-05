@@ -97,6 +97,18 @@ public class AdministradorController {
         return "redirect:/admin/servicos";
     }
 
+    @PostMapping(value = "/servicos/busca")
+    public ModelAndView serviceSearch(@RequestParam(name = "search") String search){
+        ModelAndView mv = new ModelAndView("servicosAdmin");
+        try{
+            List<Servico> servicos = servicoService.findServiceByNome(search);
+            mv.addObject("servicos", servicos);
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Usuário não encontrado.");
+        }
+        return mv;
+    }
+
     @GetMapping(value = "/usuarios")
     public ModelAndView usuarios() {
         ModelAndView mv = new ModelAndView("usuariosAdmin");
@@ -118,6 +130,18 @@ public class AdministradorController {
             attributes.addFlashAttribute("errorMessage", "Erro ao cadastrar novo usuário.");
         }
         return "redirect:/admin/usuarios";
+    }
+
+    @PostMapping(value = "/usuarios/busca")
+    public ModelAndView searchUser(@RequestParam(name = "search") String search){
+        ModelAndView mv = new ModelAndView("usuariosAdmin");
+        try {
+            List<Usuario> usuarios = usuarioService.findUserByNome(search);
+            mv.addObject("usuarios", usuarios);
+        } catch (Exception ex){
+            mv.addObject("errorMessage", "Usuário não encontrado.");
+        }
+        return mv;
     }
 
     @PostMapping(value = "/usuarios/disable")
