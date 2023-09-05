@@ -1,9 +1,6 @@
 package com.soulcode.goserviceapp.service;
 
-import com.soulcode.goserviceapp.domain.Administrador;
-import com.soulcode.goserviceapp.domain.Cliente;
-import com.soulcode.goserviceapp.domain.Prestador;
-import com.soulcode.goserviceapp.domain.Usuario;
+import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,17 +65,17 @@ public class UsuarioService {
     }
 
     private Administrador createAndSaveAdministrador(Usuario u){
-        Administrador admin = new Administrador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
+        Administrador admin = new Administrador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(),u.getEndereco());
         return usuarioRepository.save(admin);
     }
 
     private Prestador createAndSavePrestador(Usuario u) {
-        Prestador prestador = new Prestador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
+        Prestador prestador = new Prestador(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(),u.getEndereco());
         return usuarioRepository.save(prestador);
     }
 
     private Cliente createAndSaveCliente(Usuario u) {
-        Cliente cliente = new Cliente(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
+        Cliente cliente = new Cliente(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(), (Endereco) u.getEndereco());
         return usuarioRepository.save(cliente);
     }
 
