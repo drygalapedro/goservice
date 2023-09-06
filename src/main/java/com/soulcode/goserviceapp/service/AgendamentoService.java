@@ -39,9 +39,6 @@ import java.util.Optional;
             throw new RuntimeException("Agendamento não foi encontrado");
         }
 
-
-
-
         public Agendamento create(Authentication authentication, Long servicoId, Long prestadorId, LocalDate data, LocalTime hora) {
             Cliente cliente = clienteService.findAuthenticated(authentication);
             Prestador prestador = prestadorService.findById(prestadorId);
@@ -65,23 +62,22 @@ import java.util.Optional;
             return agendamentoRepository.save(agendamento);
         }
 
-
-        
-
-
-
     @Cacheable(cacheNames = "redisCache")
-    public List<Agendamento> findByCliente(Authentication authentication){
+    public List<Agendamento> findByCliente(Authentication authentication, int page){
         System.err.println("BUSCANDO AGENDAMENTOS CLIENTE NO BANCO...");
         Cliente cliente = clienteService.findAuthenticated(authentication);
-        return agendamentoRepository.findByClienteEmail(cliente.getEmail());
+        return agendamentoRepository.findByClienteEmail(cliente.getEmail(), page);
     }
 
+//    public List<Usuario> buscarUsuariosPaginados(int offset) {
+//        return usuarioRepository.buscaUsuariosPaginados(offset);
+//    }
+
     @Cacheable(cacheNames = "redisCache")
-    public List<Agendamento> findByPrestador(Authentication authentication){
+    public List<Agendamento> findByPrestador(Authentication authentication, int page){
         System.err.println("BUSCANDO AGENDAMENTOS PRESTADOR NO BANCO...");
         Prestador prestador = prestadorService.findAuthenticated(authentication);
-        return  agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
+        return  agendamentoRepository.findByPrestadorEmail(prestador.getEmail(), page);
     }
 
     public void cancelAgendaPrestador(Authentication authentication, Long id){

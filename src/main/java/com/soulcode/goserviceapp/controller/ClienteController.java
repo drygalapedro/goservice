@@ -103,11 +103,14 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/historico")
-    public ModelAndView historico(Authentication authentication) {
+    public ModelAndView historico(Authentication authentication, @RequestParam(defaultValue = "0", name="page") int page) {
         ModelAndView mv = new ModelAndView("historicoCliente");
         try {
-            List<Agendamento> agendamentos = agendamentoService.findByCliente(authentication);
+            int offset = page * 10;
+            List<Agendamento> agendamentos = agendamentoService.findByCliente(authentication, offset);
             mv.addObject("agendamentos", agendamentos);
+            mv.addObject("currentPage", page);
+            mv.addObject("totalPages", agendamentos.size());
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
             mv.addObject("errorMessage", ex.getMessage());
         } catch (Exception ex) {
@@ -115,6 +118,21 @@ public class ClienteController {
         }
         return mv;
     }
+
+//    @GetMapping(value = "/usuarios")
+//    public ModelAndView usuarios(@RequestParam(defaultValue = "0", name="page") int pagina) {
+//        ModelAndView mv = new ModelAndView("usuariosAdmin");
+//        try {
+//            int offset = pagina * 10;
+//            List<Usuario> usuarios = usuarioService.buscarUsuariosPaginados(offset);
+//            mv.addObject("usuarios", usuarios);
+//            mv.addObject("currentPage", pagina);
+//            mv.addObject("totalPages", usuarios.size());
+//        } catch (Exception e) {
+//            mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
+//        }
+//        return mv;
+//    }
 
     @PostMapping(value = "/historico/cancelar")
     public String cancelarAgendamento(

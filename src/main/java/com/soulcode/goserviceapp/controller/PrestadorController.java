@@ -97,11 +97,15 @@ public class PrestadorController {
     }
 
     @GetMapping(value = "/agenda")
-    public ModelAndView agenda(Authentication authentication) {
+    public ModelAndView agenda(Authentication authentication, @RequestParam(defaultValue = "0", name="page") int page) {
         ModelAndView mv = new ModelAndView("agendaPrestador");
         try {
-            List<Agendamento> agendamentos = agendamentoService.findByPrestador(authentication);
+            int offset = page * 10;
+            List<Agendamento> agendamentos = agendamentoService.findByPrestador(authentication, offset);
             mv.addObject("agendamentos", agendamentos);
+            mv.addObject("currentPage", page);
+            mv.addObject("totalPages", agendamentos.size());
+//
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
             mv.addObject("errorMessage", ex.getMessage());
         } catch (Exception ex) {
@@ -109,6 +113,21 @@ public class PrestadorController {
         }
         return mv;
     }
+
+//    @GetMapping(value = "/usuarios")
+//    public ModelAndView usuarios(@RequestParam(defaultValue = "0", name="page") int pagina) {
+//        ModelAndView mv = new ModelAndView("usuariosAdmin");
+//        try {
+//            int offset = pagina * 10;
+//            List<Usuario> usuarios = usuarioService.buscarUsuariosPaginados(offset);
+//            mv.addObject("usuarios", usuarios);
+//            mv.addObject("currentPage", pagina);
+//            mv.addObject("totalPages", usuarios.size());
+//        } catch (Exception e) {
+//            mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
+//        }
+//        return mv;
+//    }
 
     @PostMapping(value = "/agenda/cancelar")
     public String cancelarAgendamento(
