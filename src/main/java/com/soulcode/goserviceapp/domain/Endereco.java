@@ -2,6 +2,8 @@ package com.soulcode.goserviceapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 
 @Entity
 @Table (name= "enderecos")
@@ -81,12 +83,12 @@ public class Endereco {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Endereco endereco = (Endereco) o;
-        return Objects.equals(id, endereco.id) && Objects.equals(Logadouro, endereco.Logadouro) && Objects.equals(numero, endereco.numero) && Objects.equals(cidade, endereco.cidade) && Objects.equals(uf, endereco.uf);
+        return Objects.equals(id, endereco.id) && Objects.equals(logradouro, endereco.logradouro) && Objects.equals(numero, endereco.numero) && Objects.equals(cidade, endereco.cidade) && Objects.equals(uf, endereco.uf);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, Logadouro, numero, cidade, uf);
+        return Objects.hash(id, logradouro, numero, cidade, uf);
     }
 }
 
