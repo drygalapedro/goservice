@@ -33,14 +33,21 @@ public class AdministradorController {
     private UsuarioLogService usuarioLogService;
 
     @GetMapping(value = "/servicos")
-    public ModelAndView servicos(@RequestParam(defaultValue = "0", name="page") int pagina) {
+    public ModelAndView servicos(@RequestParam(defaultValue = "0", name="page") int pagina,
+                                 @RequestParam(name = "search", required = false) String search) {
         ModelAndView mv = new ModelAndView("servicosAdmin");
         try {
             int offset = pagina * 10;
-            List<Servico> servicos = servicoService.buscarServicosPaginados(offset);
-            mv.addObject("servicos", servicos);
             mv.addObject("currentPage", pagina);
-            mv.addObject("totalPages", servicos.size());
+            if (search == null){
+                List<Servico> servicos = servicoService.buscarServicosPaginados(offset);
+                mv.addObject("servicos", servicos);
+                mv.addObject("totalPages", servicos.size());
+            } else {
+                List<Servico> servicos = servicoService.findServiceByNome(search, offset);
+                mv.addObject("servicos", servicos);
+                mv.addObject("totalPages", servicos.size());
+            }
         } catch (Exception e) {
             mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
         }
@@ -96,27 +103,22 @@ public class AdministradorController {
         return "redirect:/admin/servicos";
     }
 
-    @PostMapping(value = "/servicos/busca")
-    public ModelAndView serviceSearch(@RequestParam(name = "search") String search){
-        ModelAndView mv = new ModelAndView("servicosAdmin");
-        try{
-            List<Servico> servicos = servicoService.findServiceByNome(search);
-            mv.addObject("servicos", servicos);
-        } catch (Exception ex) {
-            mv.addObject("errorMessage", "Usuário não encontrado.");
-        }
-        return mv;
-    }
-
     @GetMapping(value = "/usuarios")
-    public ModelAndView usuarios(@RequestParam(defaultValue = "0", name="page") int pagina) {
+    public ModelAndView usuarios(@RequestParam(defaultValue = "0", name="page") int pagina,
+                                 @RequestParam(name = "search", required = false) String search) {
         ModelAndView mv = new ModelAndView("usuariosAdmin");
         try {
             int offset = pagina * 10;
-            List<Usuario> usuarios = usuarioService.buscarUsuariosPaginados(offset);
-            mv.addObject("usuarios", usuarios);
             mv.addObject("currentPage", pagina);
-            mv.addObject("totalPages", usuarios.size());
+            if (search == null){
+                List<Usuario> usuarios = usuarioService.buscarUsuariosPaginados(offset);
+                mv.addObject("usuarios", usuarios);
+                mv.addObject("totalPages", usuarios.size());
+            } else {
+                List<Usuario> usuarios = usuarioService.findUserByNome(search, offset);
+                mv.addObject("usuarios", usuarios);
+                mv.addObject("totalPages", usuarios.size());
+            }
         } catch (Exception e) {
             mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
         }
@@ -132,18 +134,6 @@ public class AdministradorController {
             attributes.addFlashAttribute("errorMessage", "Erro ao cadastrar novo usuário.");
         }
         return "redirect:/admin/usuarios";
-    }
-
-    @PostMapping(value = "/usuarios/busca")
-    public ModelAndView searchUser(@RequestParam(name = "search") String search){
-        ModelAndView mv = new ModelAndView("usuariosAdmin");
-        try {
-            List<Usuario> usuarios = usuarioService.findUserByNome(search);
-            mv.addObject("usuarios", usuarios);
-        } catch (Exception ex){
-            mv.addObject("errorMessage", "Usuário não encontrado.");
-        }
-        return mv;
     }
 
     @PostMapping(value = "/usuarios/disable")
