@@ -61,7 +61,7 @@
                                 <span aria-hidden="true">Anterior</span>
                             </a>
                         </li>
-                        <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                        <li class="page-item" th:if="${totalPages >= 10}">
                             <a class="page-link" th:href="'/prestador/agenda?page='+${currentPage + 1}" aria-label="Próxima">
                                 <span aria-hidden="true">Próxima</span>
                             </a>
