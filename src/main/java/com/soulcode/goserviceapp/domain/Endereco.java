@@ -2,28 +2,37 @@ package com.soulcode.goserviceapp.domain;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
 
 @Entity
-@Table(name= "enderecos")
+@Table (name= "enderecos")
 public class Endereco {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private  String Logadouro;
+    @ManyToOne
+    @JoinColumn(name = "usuarios")
+    private Usuario usuario;
+
+
+    private String logradouro;
+
     private String numero;
     private String cidade;
     private String uf;
 
-    public Endereco() {
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Endereco(Long id, String logadouro, String numero, String cidade, String uf) {
-        this.id = id;
-        Logadouro = logadouro;
-        this.numero = numero;
-        this.cidade = cidade;
-        this.uf = uf;
+    public Endereco(Long id, String logradouro, String numero, String cidade, String uf ) {
+        this.id= id;
+        this.logradouro= logradouro;
+        this.numero= numero;
+        this.cidade= cidade;
+        this.uf= uf;
+
     }
 
 
@@ -34,13 +43,12 @@ public class Endereco {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getLogadouro() {
-        return Logadouro;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setLogadouro(String logadouro) {
-        Logadouro = logadouro;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public String getNumero() {
@@ -67,6 +75,7 @@ public class Endereco {
         this.uf = uf;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,6 +89,7 @@ public class Endereco {
         return Objects.hash(id, Logadouro, numero, cidade, uf);
     }
 }
+
 
 
 
