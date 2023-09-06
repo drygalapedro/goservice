@@ -54,7 +54,7 @@
             <div class="card-body">
                 <h5 class="card-title mb-2">Usuários cadastrados</h5>
 
-                <form th:action="@{/admin/usuarios/busca}" method="post">
+                <form th:action="@{/admin/usuarios}" method="get">
                     <input type="text" class="form-control" name="search" id="search" placeholder="Buscar Usuário">
                     <input type="submit" class="btn btn-secondary mt-2 mb-3" name="buscar" id="buscar">
                 </form>
@@ -87,12 +87,12 @@
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item" th:if="${currentPage > 0}">
-                            <a class="page-link" th:href="'/admin/usuarios?page='+${currentPage - 1}" aria-label="Anterior">
+                            <a class="page-link" th:href="'/admin/usuario?page='+${currentPage - 1}" aria-label="Anterior">
                                 <span aria-hidden="true">Anterior</span>
                             </a>
                         </li>
-                        <li class="page-item" th:if="${currentPage < totalPages - 1}">
-                            <a class="page-link" th:href="'/admin/usuarios?page='+${currentPage + 1}" aria-label="Próxima">
+                        <li class="page-item" th:if="${totalPages >= 10}">
+                            <a class="page-link" th:href="'/admin/usuario?page='+${currentPage + 1}" aria-label="Próxima">
                                 <span aria-hidden="true">Próxima</span>
                             </a>
                         </li>

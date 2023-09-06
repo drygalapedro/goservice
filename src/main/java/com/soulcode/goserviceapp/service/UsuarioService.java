@@ -37,8 +37,8 @@ public class UsuarioService {
         throw new UsuarioNaoEncontradoException();
     }
 
-    public List<Usuario> findUserByNome(String search){
-        return usuarioRepository.findUserByNome(search);
+    public List<Usuario> findUserByNome(String search, int page){
+        return usuarioRepository.findUserByNome(search, page);
     }
 
     public List<Usuario> findAll(){

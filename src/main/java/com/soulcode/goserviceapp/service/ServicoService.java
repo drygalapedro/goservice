@@ -55,8 +55,8 @@ public class ServicoService {
         return servicoRepository.findByPrestadorEmail(email);
     }
 
-    public List<Servico> findServiceByNome(String search){
-        return servicoRepository.findServiceByNome(search);
+    public List<Servico> findServiceByNome(String search, int page){
+        return servicoRepository.findServiceByNome(search, page);
     }
 
     public List<Servico> buscarServicosPaginados(int offset) {
