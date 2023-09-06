@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name= "usuarios")
+@Table(name = "usuarios")
 public class Usuario implements UserDetails {
 
     @Id
@@ -36,17 +36,22 @@ public class Usuario implements UserDetails {
     private Perfil perfil;
 
 
-    public Usuario(){
-        this.habilitado =true;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+
+    public Usuario() {
+        this.habilitado = true;
     }
 
-    public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado){
-        this.id=id;
-        this.nome=nome;
-        this.email=email;
-        this.senha=senha;
-        this.perfil=perfil;
-        this.habilitado=habilitado;
+    public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
+        this.habilitado = habilitado;
+        this.endereco = endereco;
     }
 
     public Long getId() {
@@ -97,10 +102,16 @@ public class Usuario implements UserDetails {
         this.perfil = perfil;
     }
 
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    public Endereco getEndereco(){
+        return endereco;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        String role = "ROLE_"+perfil.name();
+        String role = "ROLE_" + perfil.name();
         authorities.add(new SimpleGrantedAuthority(role));
         return authorities;
     }
@@ -135,24 +146,19 @@ public class Usuario implements UserDetails {
         return habilitado;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nome, email, senha, perfil);
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id) &&
-                Objects.equals(nome, usuario.nome) &&
-                Objects.equals(email, usuario.email) &&
-                Objects.equals(senha, usuario.senha) &&
-                perfil == usuario.perfil;
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && Objects.equals(habilitado, usuario.habilitado) && perfil == usuario.perfil && Objects.equals(endereco, usuario.endereco);
     }
 
-    public Object getEndereco() {
-        return null;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, email, senha, habilitado, perfil, endereco);
     }
+
+
 }

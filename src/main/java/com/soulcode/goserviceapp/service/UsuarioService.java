@@ -89,7 +89,7 @@ public class UsuarioService {
     }
 
     private Cliente createAndSaveCliente(Usuario u) {
-        Cliente cliente = new Cliente(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
+        Cliente cliente = new Cliente(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado(),u.getEndereco());
         return usuarioRepository.save(cliente);
     }
 
@@ -101,7 +101,7 @@ public class UsuarioService {
             return;
         }
         throw new UsuarioNaoEncontradoException();
-     }
+    }
     @Transactional
     public void enableUser(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
