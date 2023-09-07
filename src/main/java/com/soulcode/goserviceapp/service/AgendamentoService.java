@@ -2,6 +2,7 @@ package com.soulcode.goserviceapp.service;
 
 import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
+import com.soulcode.goserviceapp.repository.AgendamentoLogRepository;
 import com.soulcode.goserviceapp.repository.AgendamentoRepository;
 import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.StatusAgendamentoImutavelException;
@@ -31,6 +32,8 @@ public class AgendamentoService {
 
     @Autowired
     private PrestadorService prestadorService;
+    @Autowired
+    private AgendamentoLogRepository agendamentoLogRepository;
 
 
         @Autowired
@@ -67,9 +70,18 @@ public class AgendamentoService {
         agendamentoLogService.create(log);
 
 
-        return agendamentoRepository.save(agendamento);
+        Agendamento agendamentoSaved = agendamentoRepository.save(agendamento);
+        agendamentoLog(agendamentoSaved);
+        return agendamentoSaved;
     }
-
+    public void agendamentoLog(Agendamento agendamento) {
+        try {
+            AgendamentoLog agendamentoLog = new AgendamentoLog(agendamento);
+            agendamentoLogService.create(agendamentoLog);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     @Cacheable(cacheNames = "redisCache")
     public List<Agendamento> findByCliente(Authentication authentication, int page) {
         System.err.println("BUSCANDO AGENDAMENTOS CLIENTE NO BANCO...");
@@ -108,6 +120,8 @@ public class AgendamentoService {
             log.setHora(hora);
             agendamentoLogService.create(log);
             agendamentoRepository.save(agendamento);
+            Agendamento agenda = agendamentoRepository.save(agendamento);
+            new AgendamentoLog(agenda);
             return;
         }
         throw new StatusAgendamentoImutavelException();
@@ -131,6 +145,8 @@ public class AgendamentoService {
             log.setHora(hora);
             agendamentoLogService.create(log);
             agendamentoRepository.save(agendamento);
+            Agendamento agenda = agendamentoRepository.save(agendamento);
+            new AgendamentoLog(agenda);
             return;
         }
         throw new StatusAgendamentoImutavelException();
@@ -155,6 +171,8 @@ public class AgendamentoService {
             log.setHora(hora);
             agendamentoLogService.create(log);
             agendamentoRepository.save(agendamento);
+            Agendamento agenda = agendamentoRepository.save(agendamento);
+            new AgendamentoLog(agenda);
             return;
         }
         throw new StatusAgendamentoImutavelException();
@@ -179,6 +197,8 @@ public class AgendamentoService {
             log.setHora(hora);
             agendamentoLogService.create(log);
             agendamentoRepository.save(agendamento);
+            Agendamento agenda = agendamentoRepository.save(agendamento);
+            new AgendamentoLog(agenda);
             return;
         }
         throw new StatusAgendamentoImutavelException();

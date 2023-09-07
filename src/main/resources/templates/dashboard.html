@@ -35,6 +35,69 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="card w-100">
+                            <h2 class="card-header">Log de Usuários</h2>
+                            <div class="card-body">
+
+                                <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
+                                <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
+
+                                <table class="table w-100">
+                                    <thead>
+                                    <tr>
+                                        <th>Perfil</th>
+                                        <th>Usuário</th>
+                                        <th>E-mail</th>
+                                        <th>Data de Autenticação</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="log : ${logsAuth}">
+                                        <td th:text="${log?.perfil}"></td>
+                                        <td th:text="${log?.nome}"></td>
+                                        <td th:text="${log?.email}"></td>
+                                        <td th:text="${log?.dataLog}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mt-5">
+                        <div class="card w-100">
+                            <h2 class="card-header">Log de Agendamentos</h2>
+                            <div class="card-body">
+
+                                <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
+                                <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
+
+                                <table class="table w-100">
+                                    <thead>
+                                    <tr>
+                                        <th>ID do Agendamento</th>
+                                        <th>ID do Cliente</th>
+                                        <th>ID do Prestador</th>
+                                        <th>Status de Agendamento</th>
+                                        <th>Data do Log</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="log : ${logsAgendamento}">
+                                        <td th:text="${log?.id}"></td>
+                                        <td th:text="${log?.clienteId}"></td>
+                                        <td th:text="${log?.prestadorId}"></td>
+                                        <td th:text="${log?.statusAgendamento}"></td>
+                                        <td th:text="${log?.dataLog}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
