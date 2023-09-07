@@ -7,9 +7,11 @@ import com.soulcode.goserviceapp.domain.Prestador;
 import com.soulcode.goserviceapp.domain.Usuario;
 import com.soulcode.goserviceapp.repository.UsuarioLogRepository;
 import com.soulcode.goserviceapp.repository.UsuarioRepository;
+import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,19 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    public Usuario findAuthenticated(Authentication authentication){
+        if (authentication != null && authentication.isAuthenticated()){
+            Optional<Usuario> usuario = usuarioRepository.findByEmail(authentication.getName());
+            if (usuario.isPresent()){
+                return usuario.get();
+            } else {
+                throw new UsuarioNaoEncontradoException();
+            }
+        } else {
+            throw new UsuarioNaoAutenticadoException();
+        }
+    }
 
     public Usuario findByEmail(String email){
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);

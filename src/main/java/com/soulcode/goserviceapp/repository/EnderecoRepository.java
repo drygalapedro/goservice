@@ -16,7 +16,7 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE endereco SET endereco.cidade = ?, endereco.logradouro = ?, endereco.numero = ?, endereco.uf = ? WHERE usuario.id = ?", nativeQuery = true)
+    @Query(value = "UPDATE enderecos SET enderecos.cidade = ?, enderecos.logradouro = ?, enderecos.numero = ?, enderecos.uf = ? WHERE usuario_id = ?", nativeQuery = true)
     void updateEndereco(String cidade, String logradouro, String numero, String uf, Long usuarioId);
 
 }

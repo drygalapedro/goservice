@@ -3,6 +3,7 @@ package com.soulcode.goserviceapp.service;
 import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
 import com.soulcode.goserviceapp.repository.AgendamentoRepository;
+import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.StatusAgendamentoImutavelException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,6 +31,11 @@ import java.util.Optional;
 
         @Autowired
         private PrestadorService prestadorService;
+
+        @Autowired
+        private UsuarioRepository usuarioRepository;
+
+
 
         public Agendamento findById(Long id) {
             Optional<Agendamento> agendamento = agendamentoRepository.findById(id);
@@ -69,9 +75,9 @@ import java.util.Optional;
         return agendamentoRepository.findByClienteEmail(cliente.getEmail(), page);
     }
 
-//    public List<Usuario> buscarUsuariosPaginados(int offset) {
-//        return usuarioRepository.buscaUsuariosPaginados(offset);
-//    }
+    public List<Usuario> buscarUsuariosPaginados(int offset) {
+        return usuarioRepository.buscaUsuariosPaginados(offset);
+   }
 
     @Cacheable(cacheNames = "redisCache")
     public List<Agendamento> findByPrestador(Authentication authentication, int page){
@@ -175,5 +181,9 @@ import java.util.Optional;
         }
         throw new StatusAgendamentoImutavelException();
     }
-}
+
+        public List<Agendamento> findByData(String dataInicio, String dataFim, int page) {
+            return agendamentoRepository.findByData(dataInicio, dataFim, page);
+        }
+    }
 

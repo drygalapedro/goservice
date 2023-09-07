@@ -12,10 +12,6 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "usuarios")
-    private Usuario usuario;
-
 
     private String logradouro;
 
@@ -23,10 +19,6 @@ public class Endereco {
     private String cidade;
     private String uf;
 
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 
     public Endereco(Long id, String logradouro, String numero, String cidade, String uf ) {
         this.id= id;
@@ -77,6 +69,9 @@ public class Endereco {
         this.uf = uf;
     }
 
+    public Endereco(){
+
+    }
 
     @Override
     public boolean equals(Object o) {

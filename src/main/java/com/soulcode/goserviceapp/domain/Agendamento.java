@@ -4,6 +4,7 @@ import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -36,7 +37,10 @@ public class Agendamento implements Serializable{
     private StatusAgendamento statusAgendamento;
     @NotNull(message = "A data do agendamento não pode ser vazia.")
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private  LocalDate data;
+
+
     @NotNull(message = "A hora do agendamento não pode ser vazia.")
     @Column(nullable = false)
     private LocalTime hora;

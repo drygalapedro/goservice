@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{::title}, ~{::#content})">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:src="@{/resources/static/js/script.js}">
+    <title>Alterar Endereco | GoService</title>
 </head>
 <body>
+
+<div id="content">
+    <div th:replace="fragments/header :: header"></div>
+
+    <main class="container mt-4">
+        <h2>Alterar Endereço</h2>
+
+        <div class="card w-100 mt-5">
+            <div class="card-body">
+
+                <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
+                <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
+
+                <form method="post" th:action="@{/alterar-endereco}">
+
+                    <div class="mb-3">
+                        <label for="logradouro" class="form-label">Logradouro<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="logradouro" name="logradouro" required>
+                        <div class="form-text"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="numero" class="form-label">Número<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="numero" name="numero" required>
+                        <div class="form-text"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cidade" class="form-label">Cidade<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" required>
+                        <div class="form-text"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="uf" class="form-label">UF<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="uf" name="uf" required>
+                        <div class="form-text"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Confirmar alteração de endereço">Alterar <i class="bi bi-pencil-fill ms-2"></i></button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
 
 </body>
 </html>
