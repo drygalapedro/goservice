@@ -54,6 +54,9 @@ public class AgendamentoLog {
         this.dataHoraRegistro = LocalDateTime.now();
     }
 
+    public AgendamentoLog(Agendamento agendamento) {
+    }
+
     public String getId() {
         return id;
     }

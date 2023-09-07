@@ -16,12 +16,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import com.soulcode.goserviceapp.domain.AgendamentoLog;
+import com.soulcode.goserviceapp.service.AgendamentoLogService;
 import java.util.List;
+
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdministradorController {
+    @Autowired
+    private AgendamentoLogService agendamentoLogService;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -166,6 +170,8 @@ public class AdministradorController {
         try {
             List<UsuarioLog> logsAuth = usuarioLogService.findAll();
             mv.addObject("logsAuth", logsAuth);
+            List<AgendamentoLog> logsAgendamento = agendamentoLogService.findAll();
+            mv.addObject("logsAgendamento", logsAgendamento);
         } catch (Exception ex) {
             mv.addObject("errorMessage", "Erro ao buscar dados de log de autenticação.");
         }
