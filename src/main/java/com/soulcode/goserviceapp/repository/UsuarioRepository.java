@@ -24,14 +24,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "UPDATE usuarios u SET u.habilitado = ? WHERE u.id = ?", nativeQuery = true)
     void updateEnableById(boolean habilitado, Long id);
 
-    @Query(value = "SELECT * FROM usuarios u WHERE u.nome LIKE %?% LIMIT ?, 10", nativeQuery = true)
-    List<Usuario> findUserByNome(String search, int page);
+    @Query(value = "SELECT * FROM usuarios u WHERE u.nome LIKE %?1%", nativeQuery = true)
+    List<Usuario> findUserByNome(String search);
 
     @Modifying
     @Query(value = "UPDATE usuarios u SET u.nome = ?, u.email = ? WHERE u.id = ?", nativeQuery = true)
     void updateNomeEmail(String nome, String email, Long id);
 
-    @Query(value = "SELECT * FROM usuarios LIMIT ? , 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM usuarios LIMIT ? , 10", nativeQuery = true)
     List<Usuario> buscaUsuariosPaginados(int offset);
 
     @Query(value = "SELECT u.perfil = ?, COUNT(u) FROM Usuario u GROUP BY u.perfil", nativeQuery = true)
