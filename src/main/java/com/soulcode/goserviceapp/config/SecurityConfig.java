@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/prestador/**").hasRole("PRESTADOR")
                 .requestMatchers("/cliente/**").hasRole("CLIENTE")
+                .requestMatchers("/agenda/**").hasRole("PRESTADOR")
                 .anyRequest()
                 .authenticated()
                 .and()

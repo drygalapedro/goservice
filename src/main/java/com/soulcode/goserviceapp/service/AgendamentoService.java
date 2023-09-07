@@ -3,6 +3,7 @@ package com.soulcode.goserviceapp.service;
 import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
 import com.soulcode.goserviceapp.repository.AgendamentoRepository;
+import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.StatusAgendamentoImutavelException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,10 +32,18 @@ public class AgendamentoService {
     @Autowired
     private PrestadorService prestadorService;
 
-    public Agendamento findById(Long id) {
-        Optional<Agendamento> agendamento = agendamentoRepository.findById(id);
-        if (agendamento.isPresent()) {
-            return agendamento.get();
+
+        @Autowired
+        private UsuarioRepository usuarioRepository;
+
+
+
+        public Agendamento findById(Long id) {
+            Optional<Agendamento> agendamento = agendamentoRepository.findById(id);
+            if (agendamento.isPresent()) {
+                return agendamento.get();
+            }
+            throw new RuntimeException("Agendamento não foi encontrado");
         }
         throw new RuntimeException("Agendamento não foi encontrado");
     }
@@ -69,9 +78,9 @@ public class AgendamentoService {
         return agendamentoRepository.findByClienteEmail(cliente.getEmail(), page);
     }
 
-//    public List<Usuario> buscarUsuariosPaginados(int offset) {
-//        return usuarioRepository.buscaUsuariosPaginados(offset);
-//    }
+    public List<Usuario> buscarUsuariosPaginados(int offset) {
+        return usuarioRepository.buscaUsuariosPaginados(offset);
+   }
 
     @Cacheable(cacheNames = "redisCache")
     public List<Agendamento> findByPrestador(Authentication authentication, int page) {
@@ -176,13 +185,8 @@ public class AgendamentoService {
         throw new StatusAgendamentoImutavelException();
     }
 
-    public List<Agendamento> buscarPorPeriodo(String dataInicio, String dataFim, Authentication authentication) {
-        Cliente cliente = clienteService.findAuthenticated(authentication);
-        if (dataInicio == null || dataFim == null) {
-            throw new RuntimeException();
-        }
-                return agendamentoRepository.findByDataAgendamento(dataInicio, dataFim, cliente.getId());
-
+        public List<Agendamento> findByData(String dataInicio, String dataFim, int page) {
+            return agendamentoRepository.findByData(dataInicio, dataFim, page);
         }
     }
 

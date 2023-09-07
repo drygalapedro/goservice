@@ -18,6 +18,22 @@
                 <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
                 <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
+                <form class="row" method="post" th:action="@{/prestador/agenda/pesquisa}">
+                    <div class="col">
+                        <label for="data-inicio">Data de início</label>
+                        <input class="form-control" type="date" name="data-inicio" id="data-inicio" required>
+                    </div>
+                    <div class="col">
+                        <label for="data-fim">Data de finalização</label>
+                        <input class="form-control" type="date" name="data-fim"  id="data-fim" required>
+                    </div>
+                    <div class="col d-flex flex-column-reverse">
+                        <button type="submit" class="btn btn-primary align-bottom">Buscar<i class="bi bi-search"></i></button>
+                    </div>
+                    <div class="col d-flex flex-column-reverse">
+                        <a th:href="@{/prestador/agenda}" class="btn btn-secondary align-bottom">Todos os serviços</a>
+                    </div>
+                </form>
                 <table class="table w-100">
                     <thead>
                     <tr>
@@ -61,7 +77,9 @@
                                 <span aria-hidden="true">Anterior</span>
                             </a>
                         </li>
-                        <li class="page-item" th:if="${totalPages >= 10}">
+
+                        <li class="page-item" th:if="${currentPage < totalPages - 1 }">
+
                             <a class="page-link" th:href="'/prestador/agenda?page='+${currentPage + 1}" aria-label="Próxima">
                                 <span aria-hidden="true">Próxima</span>
                             </a>

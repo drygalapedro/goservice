@@ -43,6 +43,7 @@ public class Usuario implements UserDetails {
     private Endereco endereco;
 
     public Usuario() {
+        this.endereco = new Endereco();
         this.habilitado = true;
     }
 
