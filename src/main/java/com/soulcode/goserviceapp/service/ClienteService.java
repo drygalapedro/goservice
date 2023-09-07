@@ -7,6 +7,7 @@ import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoExceptio
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -46,5 +47,21 @@ public class ClienteService {
         updatedCliente.setCpf(cliente.getCpf());
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
         return clienteRepository.save(updatedCliente);
+    }
+
+    @Transactional
+    public void updateProfilePic(Authentication authentication, String profilePicUrl){
+        if(authentication != null && authentication.isAuthenticated()) {
+            String emailAuthenticated = authentication.getName();
+            Optional<Cliente> cliente = clienteRepository.findByEmail(emailAuthenticated);
+            if(cliente.isPresent()) {
+                Cliente existingCliente = cliente.get();
+                existingCliente.setUrlFoto(profilePicUrl);
+                clienteRepository.save(existingCliente);
+                return;
+            }
+            throw new UsuarioNaoEncontradoException();
+        }
+        throw new UsuarioNaoAutenticadoException();
     }
 }
