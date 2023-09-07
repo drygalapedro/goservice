@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,5 +70,21 @@ public class PrestadorService {
     public List<Prestador> findByServicoId(Long id){
         System.err.println("BUSCANDO SERVIÇOS PARA PRESTADOR NO BANCO...");
         return prestadorRepository.findByServicoId(id);
+    }
+
+    @Transactional
+    public void updateProfilePic(Authentication authentication, String profilePicUrl){
+        if(authentication != null && authentication.isAuthenticated()) {
+            String emailAuthenticated = authentication.getName();
+            Optional<Prestador> prestador = prestadorRepository.findByEmail(emailAuthenticated);
+            if(prestador.isPresent()) {
+                Prestador existingPrestador = prestador.get();
+                existingPrestador.setUrlFoto(profilePicUrl);
+                prestadorRepository.save(existingPrestador);
+                return;
+            }
+            throw new UsuarioNaoEncontradoException();
+        }
+        throw new UsuarioNaoAutenticadoException();
     }
 }
