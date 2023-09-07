@@ -35,6 +35,8 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private Perfil perfil;
 
+    @Column
+    private String urlFoto;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
@@ -125,6 +127,14 @@ public class Usuario implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
     }
 
     @Override

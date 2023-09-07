@@ -50,7 +50,27 @@
                     <button type="submit" class="btn btn-primary"data-bs-toggle="tooltip" data-bs-placement="top"
                             data-bs-custom-class="custom-tooltip"
                             data-bs-title="Clique aqui para salvar seus dados cadastrais">Salvar <i class="bi bi-save2 ms-2"></i></button>
+
+
+                    <input type="hidden" id="urlFoto" name="urlFoto">
                 </form>
+            </div>
+
+            <div class="col-md-4 text-center">
+                <div class="mb-3">
+                    <img id="imagePreview" th:src="${cliente.urlFoto != null ? cliente.urlFoto : defaultImageUrl}" class="rounded-circle" alt="Foto de Perfil" width="150" height="150">
+                </div>
+
+                <div class="mb-3">
+                    <label for="profilePic" class="form-label">Foto de Perfil</label>
+                    <input type="file" class="form-control" id="profilePic" name="profile">
+                </div>
+
+                <div class="mb-3">
+                    <progress id="uploadProgressBar" value="0" max="100" style="width:100%;"></progress>
+                </div>
+
+                <button class="btn btn-primary" id="updateButton">Upload <i class="bi bi-upload ms-2"></i></button>
             </div>
         </div>
     </div>

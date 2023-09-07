@@ -103,14 +103,24 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/historico")
-    public ModelAndView historico(Authentication authentication, @RequestParam(defaultValue = "0", name="page") int page) {
+    public ModelAndView historico(Authentication authentication, @RequestParam(defaultValue = "0", name="page") int page,
+                                  @RequestParam( value ="dataInicio", required = false) String dataInicio,
+                                  @RequestParam( value ="dataFim", required = false) String dataFim) {
         ModelAndView mv = new ModelAndView("historicoCliente");
+        System.out.println(dataInicio);
+        System.out.println(dataFim);
         try {
-            int offset = page * 10;
-            List<Agendamento> agendamentos = agendamentoService.findByCliente(authentication, offset);
-            mv.addObject("agendamentos", agendamentos);
-            mv.addObject("currentPage", page);
-            mv.addObject("totalPages", agendamentos.size());
+            if(dataInicio== null || dataFim == null){
+                int offset = page * 10;
+                List<Agendamento> agendamentos = agendamentoService.findByCliente(authentication, offset);
+                mv.addObject("agendamentos", agendamentos);
+                mv.addObject("currentPage", page);
+                mv.addObject("totalPages", agendamentos.size());
+            }
+            else {
+                List<Agendamento> agendamentosPorData= agendamentoService.buscarPorPeriodo(dataInicio,dataFim,authentication);
+                mv.addObject("agendamentos", agendamentosPorData);
+            }
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
             mv.addObject("errorMessage", ex.getMessage());
         } catch (Exception ex) {
@@ -167,4 +177,7 @@ public class ClienteController {
         }
         return "redirect:/cliente/historico";
     }
+
+
 }
+
