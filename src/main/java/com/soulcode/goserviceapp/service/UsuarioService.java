@@ -130,17 +130,4 @@ public class UsuarioService {
     public List<Usuario> buscarUsuariosPaginados(int offset) {
         return usuarioRepository.buscaUsuariosPaginados(offset);
     }
-
-    public Usuario findAuthenticated(Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()){
-            Optional<Usuario> usuario = usuarioRepository.findByEmail(authentication.getName());
-            if(usuario.isPresent()){
-                return usuario.get();
-            } else {
-                throw new UsuarioNaoEncontradoException();
-            }
-        } else {
-            throw new UsuarioNaoAutenticadoException();
-        }
-    }
 }

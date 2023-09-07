@@ -45,8 +45,7 @@ public class AgendamentoService {
             }
             throw new RuntimeException("Agendamento não foi encontrado");
         }
-        throw new RuntimeException("Agendamento não foi encontrado");
-    }
+
 
     public Agendamento create(Authentication authentication, Long servicoId, Long prestadorId, LocalDate data, LocalTime hora) {
         Cliente cliente = clienteService.findAuthenticated(authentication);

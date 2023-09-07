@@ -118,7 +118,7 @@ public class ClienteController {
                 mv.addObject("totalPages", agendamentos.size());
             }
             else {
-                List<Agendamento> agendamentosPorData= agendamentoService.buscarPorPeriodo(dataInicio,dataFim,authentication);
+                List<Agendamento> agendamentosPorData= agendamentoService.findByData(dataInicio,dataFim, page);
                 mv.addObject("agendamentos", agendamentosPorData);
             }
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
